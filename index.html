@@ -1,0 +1,115 @@
+<html>
+<head>
+<title>Presensi</title>
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	body {
+		background-color: #ccc;
+	}
+	.container {
+		width: 600px;
+		margin: 50px auto;
+	}
+	.container .header-name {
+		font-size: 2rem;
+		text-align: center;
+		font-family: sans-serif;
+		font-weight: 200;
+	}
+	.time {
+		margin-top: 100px;
+		text-align: center;
+	}
+	.time span{
+		font-size: 4rem;
+	}	
+	.kehadiran {
+		padding: 10px 20px;
+		background: #000;
+		color: #fff;
+		margin-top: 20px;
+		margin-left: 200px;
+	}
+	.btn-kehadiran {
+		padding: 10px;
+	}
+
+</style>
+</head>
+<body>
+<div class="container">
+	<h1 class="header-name">Presensi</h1><hr>
+	<div class="time">
+		<span class="tHours"></span>
+		<span class="tMinute"></span>
+		<span class="tSecond"></span>
+	</div>
+	<select class="kehadiran">
+		<option  class="hadir">Hadir</option>
+		<option  class="tidakHadir">Tidak Hadir</option>
+	</select>
+	<button class="btn-kehadiran">Submit</button>
+</div>
+</body>
+
+<script>
+	
+	const getTime = () => {
+		const time = new Date();
+		const hours = time.getHours();
+		const minute = time.getMinutes();
+		const second = time.getSeconds();
+		
+		displayTime(hours, minute, second);
+		
+		return time;
+	}
+	
+	const displayTime = (hours, minute, second) => {
+		const tHours = document.querySelector('.tHours');
+		const tMinute = document.querySelector('.tMinute');
+		const tSecond = document.querySelector('.tSecond');
+		tHours.innerHTML = `${hours} : `;
+		tMinute.innerHTML = `${minute} : `;
+		tSecond.innerHTML = `${second}`;
+	}
+	
+	const getSelect = () => {
+		const btnSelect = document.querySelector('.btn-kehadiran');
+		const time = getTime();
+		const hours = time.getHours();
+		const minute = time.getMinutes();
+		const second = time.getSeconds();
+		
+		const rTime = `${hours} : ${minute} : ${second}`;
+		
+		btnSelect.addEventListener('click', function() {
+			const select  = document.querySelector('.kehadiran');
+			
+			//selected option di select
+			const pilOption = (select.options[select.selectedIndex]);
+			
+			if(pilOption.className == 'hadir') {
+				alert(pilOption.value + ' ' + 'Waktu Anda' + ' ' + rTime);
+			} else {
+				const alasan = prompt('alasan tidak hadir : ');
+				alert(pilOption.value + ' ' + 'karena'+ ' ' + alasan);
+			}
+			
+			
+		});
+
+	}
+	
+	getSelect();
+	
+	const setTime = () => {
+		setInterval(getTime, 1000);
+	}
+		
+	setTime();
+</script>
+</html>
